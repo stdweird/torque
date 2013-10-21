@@ -279,8 +279,32 @@ int task_save(
     return(PBSE_BAD_PARAMETER);
     }
 
+
   strncpy(namebuf, path_jobs, sizeof(namebuf) - 1);     /* job directory path */
+  if (LOGLEVEL >= 1)
+    {
+    sprintf(log_buffer, "saving task %d %s", sizeof(namebuf) - 1, pjob->ji_qs.ji_fileprefix);
+
+    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
+    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, namebuf);
+    }
+
   strncat(namebuf, pjob->ji_qs.ji_fileprefix, sizeof(namebuf) - 1); /*TODO: think about stncats third arguments*/
+
+  if (LOGLEVEL >= 1)
+    {
+    sprintf(log_buffer, "saving task 2 %d %s", sizeof(namebuf) - 1, pjob->ji_qs.ji_fileprefix);
+
+    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
+    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, namebuf);
+    }
+
+  if (LOGLEVEL >= 1)
+    {
+    sprintf(log_buffer, "saving task part 3 OK");
+
+    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
+    }
 
   if (multi_mom)
     {
@@ -345,12 +369,6 @@ int task_save(
 
   /* just write the "critical" base structure to the file */
 
-  if (LOGLEVEL >= 1)
-    {
-    sprintf(log_buffer, "saving task part 2 before quickwrite");
-
-    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
-    }
 
   while ((i = write_ac_socket(fds,&ptask->ti_qs,sizeof(ptask->ti_qs)) ) != sizeof(ptask->ti_qs))
     {
@@ -384,12 +402,6 @@ int task_save(
   /* SUCCESS */
 
   close(fds);
-  if (LOGLEVEL >= 1)
-    {
-    sprintf(log_buffer, "saving task part 3 OK");
-
-    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
-    }
 
   return(0);
   }  /* END task_save() */
