@@ -294,7 +294,7 @@ int task_save(
 
   openflags = O_WRONLY | O_CREAT | O_Sync;
 
-  if (LOGLEVEL >= 6)
+  if (LOGLEVEL >= 1)
     {
     sprintf(log_buffer, "saving task in %s",
             namebuf);
@@ -345,6 +345,13 @@ int task_save(
 
   /* just write the "critical" base structure to the file */
 
+  if (LOGLEVEL >= 1)
+    {
+    sprintf(log_buffer, "saving task part 2 before quickwrite");
+
+    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
+    }
+
   while ((i = write_ac_socket(fds,&ptask->ti_qs,sizeof(ptask->ti_qs)) ) != sizeof(ptask->ti_qs))
     {
     if ((i < 0) && (errno == EINTR))
@@ -377,6 +384,12 @@ int task_save(
   /* SUCCESS */
 
   close(fds);
+  if (LOGLEVEL >= 1)
+    {
+    sprintf(log_buffer, "saving task part 3 OK");
+
+    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
+    }
 
   return(0);
   }  /* END task_save() */
