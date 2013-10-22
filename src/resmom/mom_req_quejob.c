@@ -252,13 +252,6 @@ void req_quejob(
       }
     }
 
-  if (LOGLEVEL >= 1)
-    {
-    sprintf(log_buffer, "pre saving task %s", pj->ji_qs.ji_fileprefix);
-
-    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
-    }
-
   /*
    * New job ...
    *
@@ -350,6 +343,13 @@ void req_quejob(
       pj->ji_grpcache = NULL;
       }
     }
+  if (LOGLEVEL >= 1)
+    {
+    sprintf(log_buffer, "pre saving task %s", pj->ji_qs.ji_fileprefix);
+
+    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
+    }
+
 
   /* decode attributes from request into job structure */
 
