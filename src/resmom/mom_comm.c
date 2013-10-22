@@ -283,7 +283,11 @@ int task_save(
   strncpy(namebuf, path_jobs, sizeof(namebuf) - 1);     /* job directory path */
   if (LOGLEVEL >= 1)
     {
-    sprintf(log_buffer, "saving task %d %s", sizeof(namebuf) - 1, pjob->ji_qs.ji_fileprefix);
+    sprintf(log_buffer, "saving task %d %s %p %p %p", sizeof(namebuf) - 1,
+    		pjob->ji_qs.ji_fileprefix,
+    		&pjob,
+    		&pjob->ji_qs,
+    		&pjob->ji_qs.ji_fileprefix);
 
     log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
     log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, namebuf);

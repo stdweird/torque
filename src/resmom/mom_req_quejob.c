@@ -252,6 +252,13 @@ void req_quejob(
       }
     }
 
+  if (LOGLEVEL >= 1)
+    {
+    sprintf(log_buffer, "pre saving task %s", pj->ji_qs.ji_fileprefix);
+
+    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
+    }
+
   /*
    * New job ...
    *
@@ -314,6 +321,13 @@ void req_quejob(
       return;
       }
     }    /* END else (pj != NULL) */
+
+  if (LOGLEVEL >= 1)
+    {
+    sprintf(log_buffer, "pre saving task basename %s", basename);
+
+    log_record(PBSEVENT_JOB, PBS_EVENTCLASS_SERVER, __func__, log_buffer);
+    }
 
   if (IsCheckpoint == 0)
     {
